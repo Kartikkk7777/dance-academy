@@ -1,3 +1,4 @@
+import Link from "next/link";
 import PlaceholderImage from "@/components/PlaceholderImage";
 
 export const metadata = {
@@ -34,9 +35,12 @@ export default function Programs() {
               <p className="text-sm opacity-80 mb-4 flex-grow">
                 Join our {program.toLowerCase()} classes to learn fundamental techniques, improve your skills, and express yourself.
               </p>
-              <button className="text-accent font-semibold text-left hover:underline w-full">
+              <Link 
+                href={`/contact?program=${encodeURIComponent(program)}`} 
+                className="text-accent font-semibold text-left hover:underline w-full inline-block mt-auto"
+              >
                 Enquire Now &rarr;
-              </button>
+              </Link>
             </div>
           </div>
         ))}

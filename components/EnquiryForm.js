@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, Suspense } from "react";
+import { useSearchParams } from "next/navigation";
 
 const VALID_PROGRAMS = [
   'Classical Dance',
@@ -15,7 +16,10 @@ const VALID_PROGRAMS = [
   'Other',
 ];
 
-export default function EnquiryForm() {
+function EnquiryFormContent() {
+  const searchParams = useSearchParams();
+  const initialProgram = searchParams ? searchParams.get("program") || "" : "";
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -24,6 +28,13 @@ export default function EnquiryForm() {
     message: '',
     botField: '', // Honeypot — hidden from users
   });
+
+  useEffect(() => {
+    if (initialProgram && VALID_PROGRAMS.includes(initialProgram)) {
+      setFormData((prev) => ({ ...prev, program: initialProgram }));
+    }
+  }, [initialProgram]);
+
   const [status, setStatus] = useState('idle'); // idle | loading | success | error
   const [errorMessage, setErrorMessage] = useState('');
   const [fieldErrors, setFieldErrors] = useState({});
@@ -31,7 +42,6 @@ export default function EnquiryForm() {
   function handleChange(e) {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
-    // Clear field error on change
     if (fieldErrors[name]) {
       setFieldErrors((prev) => {
         const next = { ...prev };
@@ -104,7 +114,7 @@ export default function EnquiryForm() {
       )}
 
       <form onSubmit={handleSubmit} className="space-y-6" noValidate>
-        {/* Honeypot — visually hidden, screen readers skip it too */}
+        {/* Honeypot — visually hidden */}
         <div className="absolute -left-[9999px]" aria-hidden="true">
           <label htmlFor="botField">Do not fill this field</label>
           <input
@@ -232,5 +242,13 @@ export default function EnquiryForm() {
         </button>
       </form>
     </div>
+  );
+}
+
+export default function EnquiryForm() {
+  return (
+    <Suspense fallback={<div className="p-8 bg-white rounded-2xl shadow-sm border border-gray-100">Loading form...</div>}>
+      <EnquiryFormContent />
+    </Suspense>
   );
 }

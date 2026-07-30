@@ -1,4 +1,15 @@
 import Link from "next/link";
+import { Phone, Mail, MapPin } from "lucide-react";
+
+function InstagramIcon({ className = "w-4 h-4" }) {
+  return (
+    <svg className={className} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+      <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+      <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+    </svg>
+  );
+}
 
 export default function Footer() {
   return (
@@ -34,21 +45,27 @@ export default function Footer() {
               itemScope 
               itemType="https://schema.org/PostalAddress"
             >
-              <p itemProp="streetAddress">New Colony, Kakarmatta, Near I.A.I.T College, BLW</p>
-              <p><span itemProp="addressLocality">Varanasi</span>, <span itemProp="addressRegion">Uttar Pradesh</span></p>
+              <p itemProp="streetAddress" className="flex items-start gap-2">
+                <MapPin className="w-4 h-4 text-accent shrink-0 mt-0.5" />
+                <span>New Colony, Kakarmatta, Near I.A.I.T College, BLW</span>
+              </p>
+              <p className="pl-6"><span itemProp="addressLocality">Varanasi</span>, <span itemProp="addressRegion">Uttar Pradesh</span></p>
               <meta itemProp="addressCountry" content="IN" />
               
-              <div className="pt-2">
-                <a href="tel:+918604415736" className="block hover:text-accent transition-colors" itemProp="telephone">
-                  📞 +91 8604415736
+              <div className="pt-2 space-y-1">
+                <a href="tel:+918604415736" className="flex items-center gap-2 hover:text-accent transition-colors" itemProp="telephone">
+                  <Phone className="w-4 h-4 text-accent shrink-0" />
+                  <span>+91 8604415736</span>
                 </a>
-                <a href="tel:+917905766423" className="block hover:text-accent transition-colors" itemProp="telephone">
-                  📞 +91 7905766423
+                <a href="tel:+917905766423" className="flex items-center gap-2 hover:text-accent transition-colors" itemProp="telephone">
+                  <Phone className="w-4 h-4 text-accent shrink-0" />
+                  <span>+91 7905766423</span>
                 </a>
               </div>
               <div className="pt-2">
-                <a href="mailto:shivangikamkalakendra@gmail.com" className="hover:text-accent transition-colors" itemProp="email">
-                  ✉️ shivangikamkalakendra@gmail.com
+                <a href="mailto:shivangikamkalakendra@gmail.com" className="flex items-center gap-2 hover:text-accent transition-colors" itemProp="email">
+                  <Mail className="w-4 h-4 text-accent shrink-0" />
+                  <span>shivangikamkalakendra@gmail.com</span>
                 </a>
               </div>
               <div className="pt-2">
@@ -56,11 +73,11 @@ export default function Footer() {
                   href="https://instagram.com/Shivangikam_kala_kendra" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="hover:text-accent transition-colors inline-flex items-center gap-1"
+                  className="hover:text-accent transition-colors inline-flex items-center gap-2"
                   itemProp="sameAs"
                 >
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
-                  @Shivangikam_kala_kendra
+                  <InstagramIcon className="w-4 h-4 text-accent shrink-0" />
+                  <span>@Shivangikam_kala_kendra</span>
                 </a>
               </div>
             </address>
@@ -80,13 +97,8 @@ export default function Footer() {
           </div>
         </div>
         
-        <div className="mt-12 pt-8 border-t border-white/10 text-center text-sm opacity-70 flex flex-col md:flex-row justify-between items-center gap-4">
+        <div className="mt-12 pt-8 border-t border-white/10 text-center text-sm opacity-70">
           <p>&copy; {new Date().getFullYear()} Shivangikam Sangeet Kala Kendra. All rights reserved.</p>
-          <p>
-            <Link href="/dashboard" className="hover:text-accent transition-colors">
-              Admin Login
-            </Link>
-          </p>
         </div>
       </div>
     </footer>

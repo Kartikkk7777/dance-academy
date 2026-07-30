@@ -1,11 +1,9 @@
 import { headers } from 'next/headers';
 import { NextResponse } from 'next/server';
-import connectToDatabase from '@/lib/db';
+import prisma from '@/lib/db';
 import { enquirySchema } from '@/lib/validations';
-import { sanitizeObject } from '@/lib/sanitize';
 import { checkRateLimit } from '@/lib/rateLimit';
 import { sendEnquiryNotification } from '@/lib/email';
-import Enquiry from '@/models/Enquiry';
 
 export async function POST(request) {
   try {
@@ -51,28 +49,25 @@ export async function POST(request) {
 
     // 5. Honeypot check — silently accept but don't process bot submissions
     if (validated.botField && validated.botField.length > 0) {
-      // Return fake success to fool bots
       return NextResponse.json({ success: true, message: 'Thank you for your enquiry!' });
     }
 
-    // 6. Sanitize/escape all text fields before storing
+    // 6. Clean fields (no pre-DB HTML escaping required with Prisma + parameterised queries)
     const { botField, ...fieldsToSave } = validated;
-    const sanitized = sanitizeObject(fieldsToSave);
 
-    // Handle empty email — don't store empty string
-    if (sanitized.email === '' || sanitized.email === undefined) {
-      delete sanitized.email;
+    if (fieldsToSave.email === '' || fieldsToSave.email === undefined) {
+      fieldsToSave.email = null;
     }
 
-    // 7. Connect to DB and save
-    await connectToDatabase();
-    const enquiry = await Enquiry.create(sanitized);
+    // 7. Save enquiry to database via Prisma
+    const enquiry = await prisma.enquiry.create({
+      data: fieldsToSave,
+    });
 
-    // 8. Send email notification (non-blocking — don't fail the request if email fails)
+    // 8. Send email notification (non-blocking)
     try {
-      await sendEnquiryNotification(sanitized);
+      await sendEnquiryNotification(fieldsToSave);
     } catch (emailError) {
-      // Log server-side only, don't expose to client
       console.error('Email notification failed:', emailError.message);
     }
 
@@ -82,7 +77,6 @@ export async function POST(request) {
       message: 'Thank you for your enquiry! We will get back to you soon.',
     });
   } catch (error) {
-    // Generic error — full detail server-side only
     console.error('Enquiry submission error:', error);
     return NextResponse.json(
       { success: false, message: 'Something went wrong. Please try again later.' },

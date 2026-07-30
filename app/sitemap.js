@@ -1,6 +1,7 @@
 export default function sitemap() {
   const baseUrl = "https://shivangikamkalakendra.com";
 
+  // Note: /admin is explicitly excluded from sitemap and blocked in robots.txt
   const routes = [
     "",
     "/about",
@@ -8,7 +9,6 @@ export default function sitemap() {
     "/instructors",
     "/timetable",
     "/gallery",
-    "/testimonials",
     "/events",
     "/contact",
     "/privacy-policy",

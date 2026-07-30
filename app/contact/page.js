@@ -1,4 +1,15 @@
 import EnquiryForm from "@/components/EnquiryForm";
+import { Phone, Mail, MapPin } from "lucide-react";
+
+function InstagramIcon({ className = "w-5 h-5" }) {
+  return (
+    <svg className={className} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+      <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+      <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+    </svg>
+  );
+}
 
 export const metadata = {
   title: "Contact Us",
@@ -13,22 +24,28 @@ export default function Contact() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
         {/* Contact Info and Map */}
         <div>
-          <h2 className="text-2xl font-bold text-primary mb-6">Our Location</h2>
+          <h2 className="text-2xl font-bold text-primary mb-6 flex items-center gap-2">
+            <MapPin className="w-6 h-6 text-accent" />
+            <span>Our Location</span>
+          </h2>
           <address className="not-italic text-lg space-y-4 opacity-90 mb-8">
-            <p className="font-semibold">Shivangikam Sangeet Kala Kendra</p>
+            <p className="font-semibold text-primary">Shivangikam Sangeet Kala Kendra</p>
             <p>New Colony, Kakarmatta</p>
             <p>Near I.A.I.T College, BLW</p>
             <p>Varanasi, Uttar Pradesh, India</p>
             
-            <div className="pt-4 space-y-2">
+            <div className="pt-4 space-y-3">
               <a href="tel:+918604415736" className="flex items-center gap-3 hover:text-accent transition-colors">
-                <span className="text-xl">📞</span> +91 8604415736
+                <Phone className="w-5 h-5 text-accent" />
+                <span>+91 8604415736</span>
               </a>
               <a href="tel:+917905766423" className="flex items-center gap-3 hover:text-accent transition-colors">
-                <span className="text-xl">📞</span> +91 7905766423
+                <Phone className="w-5 h-5 text-accent" />
+                <span>+91 7905766423</span>
               </a>
               <a href="mailto:shivangikamkalakendra@gmail.com" className="flex items-center gap-3 hover:text-accent transition-colors">
-                <span className="text-xl">✉️</span> shivangikamkalakendra@gmail.com
+                <Mail className="w-5 h-5 text-accent" />
+                <span>shivangikamkalakendra@gmail.com</span>
               </a>
               <a 
                 href="https://instagram.com/Shivangikam_kala_kendra" 
@@ -36,8 +53,8 @@ export default function Contact() {
                 rel="noopener noreferrer"
                 className="flex items-center gap-3 hover:text-accent transition-colors"
               >
-                <svg className="w-5 h-5 text-current" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
-                @Shivangikam_kala_kendra
+                <InstagramIcon className="w-5 h-5 text-accent" />
+                <span>@Shivangikam_kala_kendra</span>
               </a>
             </div>
           </address>

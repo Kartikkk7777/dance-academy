@@ -1,0 +1,154 @@
+// Prisma schema for Shivangikam Sangeet Kala Kendra
+// PostgreSQL provider (Supabase or any standard Postgres instance)
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ─────────────────────────────────────────────
+// Admin authentication
+// ─────────────────────────────────────────────
+
+model AdminUser {
+  id           String   @id @default(cuid())
+  email        String   @unique @db.VarChar(254)
+  passwordHash String   @db.VarChar(200)
+  createdAt    DateTime @default(now())
+}
+
+// ─────────────────────────────────────────────
+// Enquiry form submissions
+// ─────────────────────────────────────────────
+
+enum EnquiryStatus {
+  NEW
+  CONTACTED
+  ENROLLED
+  CLOSED
+}
+
+model Enquiry {
+  id        String        @id @default(cuid())
+  name      String        @db.VarChar(100)
+  email     String?       @db.VarChar(254)
+  phone     String        @db.VarChar(20)
+  program   String        @db.VarChar(100)
+  message   String        @db.VarChar(2000)
+  status    EnquiryStatus @default(NEW)
+  isRead    Boolean       @default(false)
+  createdAt DateTime      @default(now())
+}
+
+// ─────────────────────────────────────────────
+// Events — text-only, no image fields
+// ─────────────────────────────────────────────
+
+model Event {
+  id          String   @id @default(cuid())
+  title       String   @db.VarChar(200)
+  description String   @db.VarChar(3000)
+  date        DateTime
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+}
+
+// ─────────────────────────────────────────────
+// Testimonials
+// ─────────────────────────────────────────────
+
+model Testimonial {
+  id          String   @id @default(cuid())
+  studentName String   @db.VarChar(100)
+  program     String?  @db.VarChar(100)
+  content     String   @db.VarChar(2000)
+  isActive    Boolean  @default(true)
+  sortOrder   Int      @default(0)
+  createdAt   DateTime @default(now())
+}
+
+// ─────────────────────────────────────────────
+// Programs
+// ─────────────────────────────────────────────
+
+model Program {
+  id        String   @id @default(cuid())
+  name      String   @db.VarChar(100)
+  description String @db.VarChar(2000)
+  imageUrl  String?  @db.VarChar(500)
+  isActive  Boolean  @default(true)
+  sortOrder Int      @default(0)
+}
+
+// ─────────────────────────────────────────────
+// Weekly timetable slots
+// ─────────────────────────────────────────────
+
+enum DayOfWeek {
+  Monday
+  Tuesday
+  Wednesday
+  Thursday
+  Friday
+  Saturday
+  Sunday
+}
+
+model TimetableSlot {
+  id          String    @id @default(cuid())
+  programName String    @db.VarChar(100)
+  dayOfWeek   DayOfWeek
+  startTime   String    @db.VarChar(10)
+  endTime     String    @db.VarChar(10)
+  instructor  String?   @db.VarChar(100)
+  isActive    Boolean   @default(true)
+}
+
+// ─────────────────────────────────────────────
+// Gallery images
+// ─────────────────────────────────────────────
+
+model GalleryImage {
+  id        String   @id @default(cuid())
+  title     String?  @db.VarChar(200)
+  altText   String   @db.VarChar(300)
+  imageUrl  String   @db.VarChar(500)
+  category  String?  @db.VarChar(50)
+  isActive  Boolean  @default(true)
+  sortOrder Int      @default(0)
+}
+
+// ─────────────────────────────────────────────
+// Site settings — single-row table
+// Get the first row; create it via seed if it doesn't exist.
+// ─────────────────────────────────────────────
+
+model Settings {
+  id        String @id @default(cuid())
+  phone1    String @db.VarChar(20)
+  phone2    String @db.VarChar(20)
+  email     String @db.VarChar(254)
+  instagram String @db.VarChar(100)
+  address   String @db.VarChar(500)
+}
+
+// ─────────────────────────────────────────────
+// Rate limiting — no native TTL in Postgres.
+// Expiry is enforced in query logic:
+//   WHERE createdAt >= NOW() - INTERVAL '15 minutes'
+// Old rows are pruned on each check to prevent unbounded growth.
+// ─────────────────────────────────────────────
+
+model RateLimit {
+  id        String   @id @default(cuid())
+  ip        String   @db.VarChar(45)
+  endpoint  String   @db.VarChar(100)
+  count     Int      @default(1)
+  createdAt DateTime @default(now())
+
+  @@index([ip, endpoint])
+}

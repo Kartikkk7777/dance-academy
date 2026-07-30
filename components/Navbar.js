@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { Menu, X } from "lucide-react";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -16,7 +17,6 @@ export default function Navbar() {
     { name: "Timetable", path: "/timetable" },
     { name: "Gallery", path: "/gallery" },
     { name: "Events", path: "/events" },
-    { name: "Testimonials", path: "/testimonials" },
     { name: "Contact", path: "/contact" },
   ];
 
@@ -25,10 +25,16 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           <div className="flex-shrink-0">
-            <Link href="/" className="font-serif text-2xl font-bold tracking-wider flex items-center gap-2">
+            {/* 
+              LOGO PLACEHOLDER: Currently text-based and non-clickable as requested.
+              TO SWAP IN REAL IMAGE LOGO LATER:
+              Replace the div below with:
+              <Image src="/logo.png" alt="Shivangikam Logo" width={180} height={50} className="h-12 w-auto object-contain" />
+            */}
+            <div className="font-serif text-2xl font-bold tracking-wider flex items-center gap-2 select-none cursor-default">
               <span className="text-accent text-3xl leading-none">ॐ</span>
               <span className="hidden sm:block">Shivangikam</span>
-            </Link>
+            </div>
           </div>
           
           <div className="hidden md:block">
@@ -58,15 +64,7 @@ export default function Navbar() {
               aria-expanded={isOpen}
             >
               <span className="sr-only">Open main menu</span>
-              {!isOpen ? (
-                <svg className="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
-                </svg>
-              ) : (
-                <svg className="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              )}
+              {!isOpen ? <Menu className="h-6 w-6" /> : <X className="h-6 w-6" />}
             </button>
           </div>
         </div>
