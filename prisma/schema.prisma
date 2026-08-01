@@ -22,6 +22,27 @@ model AdminUser {
 }
 
 // ─────────────────────────────────────────────
+// Student accounts
+// ─────────────────────────────────────────────
+
+enum StudentStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+model Student {
+  id           String        @id @default(cuid())
+  name         String        @db.VarChar(100)
+  email        String        @unique @db.VarChar(254)
+  phone        String        @db.VarChar(20)
+  passwordHash String        @db.VarChar(200)
+  program      String        @db.VarChar(100)
+  status       StudentStatus @default(PENDING)
+  createdAt    DateTime      @default(now())
+}
+
+// ─────────────────────────────────────────────
 // Enquiry form submissions
 // ─────────────────────────────────────────────
 

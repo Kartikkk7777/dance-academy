@@ -7,7 +7,6 @@ export default function sitemap() {
     "/about",
     "/programs",
     "/instructors",
-    "/timetable",
     "/gallery",
     "/events",
     "/contact",

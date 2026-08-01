@@ -88,7 +88,6 @@ export default function Footer() {
             <ul className="space-y-2 text-sm opacity-90">
               <li><Link href="/programs" className="hover:text-accent transition-colors">Programs</Link></li>
               <li><Link href="/instructors" className="hover:text-accent transition-colors">Our Instructors</Link></li>
-              <li><Link href="/timetable" className="hover:text-accent transition-colors">Timetable</Link></li>
               <li><Link href="/events" className="hover:text-accent transition-colors">Upcoming Events</Link></li>
               <li><Link href="/gallery" className="hover:text-accent transition-colors">Gallery</Link></li>
               <li><Link href="/contact" className="hover:text-accent transition-colors">Contact Us</Link></li>

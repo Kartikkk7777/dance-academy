@@ -11,7 +11,8 @@ import {
   LogOut, 
   Menu, 
   X, 
-  ShieldCheck 
+  ShieldCheck,
+  Users
 } from "lucide-react";
 
 export default function AdminDashboardLayout({ children }) {
@@ -24,6 +25,7 @@ export default function AdminDashboardLayout({ children }) {
     { name: "Overview", href: "/admin/dashboard", icon: LayoutDashboard },
     { name: "Enquiries", href: "/admin/dashboard/enquiries", icon: Inbox },
     { name: "Events", href: "/admin/dashboard/events", icon: Calendar },
+    { name: "Students", href: "/admin/dashboard/students", icon: Users },
     { name: "Settings", href: "/admin/dashboard/settings", icon: SettingsIcon },
   ];
 
