@@ -14,7 +14,7 @@ function InstagramIcon({ className = "w-4 h-4" }) {
 export default function Footer() {
   return (
     <footer 
-      className="bg-primary text-cream border-t border-accent/20"
+      className="bg-dark-maroon text-cream border-t border-accent/20"
       itemScope 
       itemType="https://schema.org/EducationalOrganization"
     >

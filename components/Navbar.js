@@ -21,7 +21,7 @@ export default function Navbar() {
   ];
 
   return (
-    <nav className="bg-primary text-cream sticky top-0 z-50 shadow-md">
+    <nav className="bg-light-gray text-dark-maroon sticky top-0 z-50 shadow-md transition-colors">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           <div className="flex-shrink-0">
@@ -45,8 +45,8 @@ export default function Navbar() {
                   href={link.path}
                   className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
                     pathname === link.path
-                      ? "bg-maroon-dark text-accent"
-                      : "hover:text-accent hover:bg-white/10"
+                      ? "bg-dark-maroon text-cream"
+                      : "hover:text-accent hover:bg-dark-maroon/5"
                   }`}
                 >
                   {link.name}
@@ -59,7 +59,7 @@ export default function Navbar() {
             <button
               onClick={() => setIsOpen(!isOpen)}
               type="button"
-              className="inline-flex items-center justify-center p-2 rounded-md text-cream hover:text-accent hover:bg-white/10 focus:outline-none"
+              className="inline-flex items-center justify-center p-2 rounded-md text-dark-maroon hover:text-accent hover:bg-dark-maroon/5 focus:outline-none"
               aria-controls="mobile-menu"
               aria-expanded={isOpen}
             >
@@ -72,7 +72,7 @@ export default function Navbar() {
 
       {isOpen && (
         <div className="md:hidden" id="mobile-menu">
-          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-primary border-t border-white/10">
+          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-light-gray border-t border-dark-maroon/10">
             {links.map((link) => (
               <Link
                 key={link.name}
@@ -80,8 +80,8 @@ export default function Navbar() {
                 onClick={() => setIsOpen(false)}
                 className={`block px-3 py-2 rounded-md text-base font-medium ${
                   pathname === link.path
-                    ? "text-accent bg-white/10"
-                    : "text-cream hover:text-accent hover:bg-white/10"
+                    ? "text-cream bg-dark-maroon"
+                    : "text-dark-maroon hover:text-accent hover:bg-dark-maroon/5"
                 }`}
               >
                 {link.name}

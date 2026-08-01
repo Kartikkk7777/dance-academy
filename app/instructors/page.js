@@ -1,4 +1,5 @@
 import PlaceholderImage from "@/components/PlaceholderImage";
+import Image from "next/image";
 
 export const metadata = {
   title: "Our Instructors",
@@ -9,6 +10,7 @@ export default function Instructors() {
   const instructors = [
     {
       name: "Shivani Patel",
+      image: "/shivani.jpeg",
       role: "Kathak / Semi-Classical / Folk / Bollywood Instructor",
       bio: "Shivani Patel is a passionate Kathak artist, performer, and dance educator dedicated to preserving the beauty of Indian classical dance while inspiring the next generation of artists. Over her 10 years of Kathak training, she has combined strong technical knowledge with expressive artistry, training rigorously in the Lucknow Gharana under Guru Smt. Vasundhara Sharma and Pt. Jaikishan Maharaj. At Shivangikam, she teaches Kathak, Semi-Classical, Folk, and Bollywood.",
       quote: "Dance is not just about movement — it is a journey of expression, discipline, culture, and self-discovery.",
@@ -23,6 +25,7 @@ export default function Instructors() {
     },
     {
       name: "Premchand",
+      image: null,
       role: "Tabla Instructor",
       bio: "A trained and dedicated Tabla artist with extensive experience in accompaniment, solo performance, and music teaching. Premchand is highly skilled in providing Tabla accompaniment for vocal, instrumental (flute and sitar), and dance performances. He is experienced in teaching Tabla and conducting practical music sessions in a simple, disciplined, and student-friendly manner. He has completed a one-year internship at the BHU Music Department and has performed on stage with Grammy-awarded Pt. Rajendra Prasanna and other renowned senior artists.",
       credentials: [
@@ -36,6 +39,7 @@ export default function Instructors() {
     },
     {
       name: "Gaurav Singh",
+      image: "/guitar.jpeg",
       role: "Guitar Instructor",
       bio: "Gaurav Singh is a highly qualified and dedicated Guitar Instructor with 10 years of teaching and performance experience. His strong foundation in academic music allows him to blend practical playing technique with music theory for a deep, holistic understanding. He nurtures talent across all ages (from beginner to advanced), specializing in Hindustani classical themes, classic Bollywood, traditional Indian compositions, as well as Western genres.",
       credentials: [
@@ -46,6 +50,7 @@ export default function Instructors() {
     },
     {
       name: "Ms. Aradhana Mishra",
+      image: "/vocal.jpeg",
       role: "Vocal Music Instructor",
       bio: "Ms. Aradhana Mishra is our Vocal Music Instructor at Shivangikam Sangeet Kala Kendra. She combines strong academic knowledge with practical teaching experience, committed to helping students master the fundamentals of Sur, Taal, rhythm, voice culture, and musical expression. Her warm, patient, and encouraging teaching style makes learning enjoyable for students of all age groups, whether taking their first step into music or refining their vocal skills.",
       credentials: [
@@ -71,10 +76,12 @@ export default function Instructors() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
           {/* Director Photo and Quick Info */}
           <div className="lg:col-span-4 flex flex-col items-center">
-            <PlaceholderImage 
-              label="Shivam Gupta Photo" 
-              height="h-80" 
-              className="rounded-2xl max-w-xs shadow-md border border-gray-100" 
+            <Image 
+              src="/shivam.jpeg"
+              alt="Shivam Gupta Photo" 
+              width={320}
+              height={320}
+              className="rounded-2xl max-w-xs shadow-md border border-gray-100 h-80 object-cover" 
             />
             <div className="text-center mt-6">
               <h2 className="text-2xl font-serif text-primary font-bold">Shivam Gupta</h2>
@@ -144,11 +151,21 @@ export default function Instructors() {
             >
               {/* Instructor Photo */}
               <div className="w-full md:w-56 flex-shrink-0 flex justify-center">
-                <PlaceholderImage 
-                  label={`${inst.name} Photo`} 
-                  height="h-64" 
-                  className="rounded-xl shadow-sm border border-gray-100 w-full max-w-[240px]" 
-                />
+                {inst.image ? (
+                  <Image 
+                    src={inst.image}
+                    alt={`${inst.name} Photo`} 
+                    width={240}
+                    height={256}
+                    className="rounded-xl shadow-sm border border-gray-100 w-full max-w-[240px] h-64 object-cover" 
+                  />
+                ) : (
+                  <PlaceholderImage 
+                    label={`${inst.name} Photo`} 
+                    height="h-64" 
+                    className="rounded-xl shadow-sm border border-gray-100 w-full max-w-[240px]" 
+                  />
+                )}
               </div>
 
               {/* Instructor Bio & Info */}

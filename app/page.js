@@ -24,18 +24,18 @@ export default function Home() {
   return (
     <div className="flex flex-col min-h-screen">
       {/* Hero Section */}
-      <section className="bg-primary text-cream py-20 px-4 sm:px-6 lg:px-8 text-center">
-        <h1 className="text-5xl md:text-7xl font-serif mb-6 leading-tight">
+      <section className="bg-dark-maroon text-cream py-20 px-4 sm:px-6 lg:px-8 text-center">
+        <h1 className="text-5xl md:text-7xl font-serif mb-6 leading-tight text-white">
           Where Art Meets <br className="hidden md:block"/> Passion and Culture
         </h1>
         <p className="text-xl md:text-2xl font-serif italic text-accent max-w-3xl mx-auto mb-10">
           "Nurturing Talent - Preserving Traditions - Inspiring Futures"
         </p>
         <div className="flex flex-col sm:flex-row justify-center gap-4">
-          <Link href="/programs" className="bg-accent text-primary px-8 py-3 rounded-full font-bold text-lg hover:bg-white transition-colors">
+          <Link href="/programs" className="bg-accent text-dark-maroon px-8 py-3 rounded-full font-bold text-lg hover:bg-white transition-colors">
             Explore Programs
           </Link>
-          <Link href="/contact" className="border-2 border-accent text-accent px-8 py-3 rounded-full font-bold text-lg hover:bg-accent hover:text-primary transition-colors">
+          <Link href="/contact" className="border-2 border-accent text-accent px-8 py-3 rounded-full font-bold text-lg hover:bg-accent hover:text-dark-maroon transition-colors">
             Contact Us
           </Link>
         </div>
