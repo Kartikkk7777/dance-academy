@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 
@@ -23,37 +24,40 @@ export default function Navbar() {
     <nav className="bg-light-gray text-dark-maroon sticky top-0 z-50 shadow-md transition-colors">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
-          <div className="flex-shrink-0">
-            {/* 
-              LOGO PLACEHOLDER: Currently text-based and non-clickable as requested.
-              TO SWAP IN REAL IMAGE LOGO LATER:
-              Replace the div below with:
-              <Image src="/logo.png" alt="Shivangikam Logo" width={180} height={50} className="h-12 w-auto object-contain" />
-            */}
-            <div className="font-serif text-2xl font-bold tracking-wider flex items-center gap-2 select-none cursor-default">
-              <span className="text-accent text-3xl leading-none">ॐ</span>
-              <span className="hidden sm:block">Shivangikam</span>
+          <div className="flex-shrink-0 flex items-center gap-3">
+            <div className="relative h-11 w-11 rounded-full overflow-hidden ring-1 ring-dark-maroon/10 bg-white flex items-center justify-center">
+              <Image
+                src="/logo.jpeg"
+                alt="Shivangikam Sangeet Kala Kendra"
+                fill
+                sizes="80px"
+                className="object-cover"
+                priority
+                quality={100}
+              />
             </div>
+            <span className="font-serif text-2xl font-bold tracking-wider hidden sm:block select-none">
+              Shivangikam
+            </span>
           </div>
-          
+
           <div className="hidden md:block">
             <div className="ml-10 flex items-baseline space-x-4">
               {links.map((link) => (
                 <Link
                   key={link.name}
                   href={link.path}
-                  className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-                    pathname === link.path
-                      ? "bg-dark-maroon text-cream"
-                      : "hover:text-accent hover:bg-dark-maroon/5"
-                  }`}
+                  className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${pathname === link.path
+                    ? "bg-dark-maroon text-cream"
+                    : "hover:text-accent hover:bg-dark-maroon/5"
+                    }`}
                 >
                   {link.name}
                 </Link>
               ))}
             </div>
           </div>
-          
+
           <div className="-mr-2 flex md:hidden">
             <button
               onClick={() => setIsOpen(!isOpen)}
@@ -77,11 +81,10 @@ export default function Navbar() {
                 key={link.name}
                 href={link.path}
                 onClick={() => setIsOpen(false)}
-                className={`block px-3 py-2 rounded-md text-base font-medium ${
-                  pathname === link.path
-                    ? "text-cream bg-dark-maroon"
-                    : "text-dark-maroon hover:text-accent hover:bg-dark-maroon/5"
-                }`}
+                className={`block px-3 py-2 rounded-md text-base font-medium ${pathname === link.path
+                  ? "text-cream bg-dark-maroon"
+                  : "text-dark-maroon hover:text-accent hover:bg-dark-maroon/5"
+                  }`}
               >
                 {link.name}
               </Link>
