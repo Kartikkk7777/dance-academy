@@ -136,40 +136,40 @@ export default function AdminStudentsPage() {
                       {new Date(s.createdAt).toLocaleDateString()}
                     </td>
                     <td className="py-4 px-4 text-right">
-                      <div className="flex items-center justify-end gap-1">
+                      <div className="flex flex-wrap items-center justify-end gap-1.5">
                         {s.status !== "APPROVED" && (
                           <button
                             onClick={() => handleStatusChange(s.id, "APPROVED")}
-                            title="Approve"
-                            className="p-1.5 rounded-lg text-green-600 hover:bg-green-50 transition-colors"
+                            className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-semibold border border-green-200 text-green-700 bg-green-50 hover:bg-green-100 transition-colors"
                           >
-                            <CheckCircle className="w-4 h-4" />
+                            <CheckCircle className="w-3.5 h-3.5" />
+                            <span>Approve</span>
                           </button>
                         )}
                         {s.status !== "REJECTED" && (
                           <button
                             onClick={() => handleStatusChange(s.id, "REJECTED")}
-                            title="Reject"
-                            className="p-1.5 rounded-lg text-red-500 hover:bg-red-50 transition-colors"
+                            className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-semibold border border-red-200 text-red-600 bg-red-50 hover:bg-red-100 transition-colors"
                           >
-                            <XCircle className="w-4 h-4" />
+                            <XCircle className="w-3.5 h-3.5" />
+                            <span>Reject</span>
                           </button>
                         )}
                         {s.status === "APPROVED" && (
                           <button
                             onClick={() => handleStatusChange(s.id, "PENDING")}
-                            title="Set Pending"
-                            className="p-1.5 rounded-lg text-amber-500 hover:bg-amber-50 transition-colors"
+                            className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-semibold border border-amber-200 text-amber-700 bg-amber-50 hover:bg-amber-100 transition-colors"
                           >
-                            <Clock className="w-4 h-4" />
+                            <Clock className="w-3.5 h-3.5" />
+                            <span>Set Pending</span>
                           </button>
                         )}
                         <button
                           onClick={() => handleDelete(s.id)}
-                          title="Delete"
-                          className="p-1.5 rounded-lg text-gray-400 hover:text-red-600 hover:bg-red-50 transition-colors"
+                          className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-semibold border border-gray-200 text-gray-600 bg-gray-50 hover:text-red-700 hover:bg-red-50 hover:border-red-200 transition-colors"
                         >
-                          <Trash2 className="w-4 h-4" />
+                          <Trash2 className="w-3.5 h-3.5" />
+                          <span>Delete</span>
                         </button>
                       </div>
                     </td>

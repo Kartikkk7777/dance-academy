@@ -15,7 +15,10 @@ export async function GET(request) {
       where.status = status;
     }
 
-    const [enquiries, total] = await Promise.all([
+    const todayStart = new Date();
+    todayStart.setHours(0, 0, 0, 0);
+
+    const [enquiries, total, totalAll, newCount, todayNew] = await Promise.all([
       prisma.enquiry.findMany({
         where,
         orderBy: { createdAt: 'desc' },
@@ -23,11 +26,24 @@ export async function GET(request) {
         take: limit,
       }),
       prisma.enquiry.count({ where }),
+      prisma.enquiry.count(),
+      prisma.enquiry.count({ where: { status: 'NEW' } }),
+      prisma.enquiry.count({
+        where: {
+          status: 'NEW',
+          createdAt: { gte: todayStart },
+        },
+      }),
     ]);
 
     return NextResponse.json({
       success: true,
       enquiries,
+      stats: {
+        total: totalAll,
+        new: newCount,
+        todayNew,
+      },
       pagination: {
         page,
         limit,

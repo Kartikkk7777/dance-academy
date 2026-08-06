@@ -158,7 +158,6 @@ export const config = {
     '/admin',
     '/admin/dashboard/:path*',
     '/api/admin/:path*',
-    '/student/login',
     '/student/register',
     '/student/dashboard/:path*',
     '/api/student/dashboard/:path*',
