@@ -92,7 +92,7 @@ export async function proxy(request) {
   // ─────────────────────────────────────────────
   if (pathname.startsWith('/admin/dashboard')) {
     if (!isAdmin) {
-      const loginUrl = new URL('/admin', request.url);
+      const loginUrl = new URL('/login', request.url);
       loginUrl.searchParams.set('from', pathname);
       return NextResponse.redirect(loginUrl);
     }
@@ -105,7 +105,7 @@ export async function proxy(request) {
   // ─────────────────────────────────────────────
   if (pathname.startsWith('/student/dashboard')) {
     if (!isStudent) {
-      const loginUrl = new URL('/student/login', request.url);
+      const loginUrl = new URL('/login', request.url);
       loginUrl.searchParams.set('from', pathname);
       return NextResponse.redirect(loginUrl);
     }
@@ -119,13 +119,30 @@ export async function proxy(request) {
     if (isAdmin) {
       return NextResponse.redirect(new URL('/admin/dashboard', request.url));
     }
-    return NextResponse.next();
+    return NextResponse.redirect(new URL('/login', request.url));
   }
 
   // ─────────────────────────────────────────────
   // 7. Redirect logged-in student away from login/register pages
   // ─────────────────────────────────────────────
-  if (pathname === '/student/login' || pathname === '/student/register') {
+  if (pathname === '/student/login') {
+    return NextResponse.redirect(new URL('/login', request.url));
+  }
+
+  if (pathname === '/student/register') {
+    if (isStudent) {
+      return NextResponse.redirect(new URL('/student/dashboard', request.url));
+    }
+    return NextResponse.next();
+  }
+
+  // ─────────────────────────────────────────────
+  // 8. Redirect logged-in users away from unified login page
+  // ─────────────────────────────────────────────
+  if (pathname === '/login') {
+    if (isAdmin) {
+      return NextResponse.redirect(new URL('/admin/dashboard', request.url));
+    }
     if (isStudent) {
       return NextResponse.redirect(new URL('/student/dashboard', request.url));
     }
@@ -137,6 +154,7 @@ export async function proxy(request) {
 
 export const config = {
   matcher: [
+    '/login',
     '/admin',
     '/admin/dashboard/:path*',
     '/api/admin/:path*',

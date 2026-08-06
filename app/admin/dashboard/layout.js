@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { 
   LayoutDashboard, 
@@ -45,7 +46,15 @@ export default function AdminDashboardLayout({ children }) {
       {/* Mobile Top Navbar */}
       <div className="md:hidden bg-primary text-cream px-4 py-3 flex items-center justify-between shadow-md">
         <div className="flex items-center gap-2 font-serif text-lg font-bold">
-          <span className="text-accent text-xl">ॐ</span>
+          <div className="relative w-8 h-8 rounded-full overflow-hidden bg-white border border-accent/30 flex items-center justify-center shrink-0">
+            <Image
+              src="/logo.jpeg"
+              alt="Shivangikam Logo"
+              fill
+              sizes="32px"
+              className="object-cover"
+            />
+          </div>
           <span>Admin Portal</span>
         </div>
         <button
@@ -64,8 +73,14 @@ export default function AdminDashboardLayout({ children }) {
       >
         <div>
           <div className="hidden md:flex items-center gap-3 pb-8 mb-6 border-b border-white/10">
-            <div className="w-10 h-10 rounded-full bg-maroon-dark flex items-center justify-center text-accent font-serif text-xl border border-accent/30 shadow-inner">
-              ॐ
+            <div className="relative w-10 h-10 rounded-full overflow-hidden bg-white border border-accent/30 flex items-center justify-center shadow-inner shrink-0">
+              <Image
+                src="/logo.jpeg"
+                alt="Shivangikam Logo"
+                fill
+                sizes="40px"
+                className="object-cover"
+              />
             </div>
             <div>
               <h1 className="font-serif font-bold text-lg text-cream leading-tight">Shivangikam</h1>

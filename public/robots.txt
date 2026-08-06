@@ -2,7 +2,7 @@ User-agent: *
 Allow: /
 Disallow: /admin
 Disallow: /api/admin/
-Disallow: /student/
+Disallow: /student/dashboard
 Disallow: /api/student/
 
 Sitemap: https://shivangikamkalakendra.com/sitemap.xml

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Phone, Mail, MapPin } from "lucide-react";
 
 function InstagramIcon({ className = "w-4 h-4" }) {
@@ -25,9 +26,17 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           
           <div>
-            <h3 className="font-serif text-2xl font-bold mb-4 flex items-center gap-2">
-              <span className="text-accent text-3xl leading-none">ॐ</span>
-              Shivangikam Sangeet Kala Kendra
+            <h3 className="font-serif text-2xl font-bold mb-4 flex items-center gap-3">
+              <div className="relative h-9 w-9 rounded-full overflow-hidden ring-1 ring-accent/25 bg-white flex items-center justify-center shrink-0">
+                <Image
+                  src="/logo.jpeg"
+                  alt="Shivangikam Logo"
+                  fill
+                  sizes="36px"
+                  className="object-cover"
+                />
+              </div>
+              <span>Shivangikam Sangeet Kala Kendra</span>
             </h3>
             <p className="mb-4 font-serif italic text-accent">
               "Nurturing Talent - Preserving Traditions - Inspiring Futures"

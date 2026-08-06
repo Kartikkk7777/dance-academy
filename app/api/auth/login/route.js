@@ -1,7 +1,7 @@
 import { headers } from 'next/headers';
 import { NextResponse } from 'next/server';
 import prisma from '@/lib/db';
-import { verifyPassword, signToken, setAuthCookie } from '@/lib/auth';
+import { verifyPassword, signToken, setAuthCookie, setStudentAuthCookie } from '@/lib/auth';
 
 const MAX_FAILED_ATTEMPTS = 5;
 const LOCKOUT_MINUTES = 15;
@@ -14,7 +14,7 @@ export async function POST(request) {
 
     const windowStart = new Date(Date.now() - LOCKOUT_MINUTES * 60 * 1000);
 
-    // Rate limiting & lockout check
+    // Rate limiting & lockout check (using 'login_attempt' as the shared rate limit key)
     const attempts = await prisma.rateLimit.findFirst({
       where: {
         ip,
@@ -51,46 +51,92 @@ export async function POST(request) {
 
     const trimmedEmail = email.trim().toLowerCase();
 
-    // Find admin user
+    // 1. Look up in AdminUser
     const admin = await prisma.adminUser.findUnique({
       where: { email: trimmedEmail },
     });
 
-    if (!admin) {
-      // Increment failed attempts counter
-      await recordFailedAttempt(ip, windowStart);
-      return NextResponse.json(
-        { success: false, message: 'Invalid email or password.' },
-        { status: 401 }
-      );
+    if (admin) {
+      const isValid = await verifyPassword(password, admin.passwordHash);
+      if (!isValid) {
+        await recordFailedAttempt(ip, windowStart);
+        return NextResponse.json(
+          { success: false, message: 'Invalid email or password.' },
+          { status: 401 }
+        );
+      }
+
+      // Successful Admin Login
+      await prisma.rateLimit.deleteMany({
+        where: { ip, endpoint: 'login_attempt' },
+      });
+
+      const token = await signToken({ id: admin.id, email: admin.email, role: 'admin' });
+      await setAuthCookie(token);
+
+      return NextResponse.json({
+        success: true,
+        message: 'Login successful.',
+        redirectTo: '/admin/dashboard',
+        user: { email: admin.email, role: 'admin' },
+      });
     }
 
-    // Verify password
-    const isValid = await verifyPassword(password, admin.passwordHash);
-    if (!isValid) {
-      await recordFailedAttempt(ip, windowStart);
-      return NextResponse.json(
-        { success: false, message: 'Invalid email or password.' },
-        { status: 401 }
-      );
+    // 2. Look up in Student
+    const student = await prisma.student.findUnique({
+      where: { email: trimmedEmail },
+    });
+
+    if (student) {
+      const isValid = await verifyPassword(password, student.passwordHash);
+      if (!isValid) {
+        await recordFailedAttempt(ip, windowStart);
+        return NextResponse.json(
+          { success: false, message: 'Invalid email or password.' },
+          { status: 401 }
+        );
+      }
+
+      // Student found and password is correct. Check status.
+      if (student.status === 'PENDING') {
+        return NextResponse.json(
+          { success: false, message: 'Your account is pending admin approval. Please check back soon.' },
+          { status: 403 }
+        );
+      }
+
+      if (student.status === 'REJECTED') {
+        return NextResponse.json(
+          { success: false, message: 'Your registration could not be approved. Please contact the academy for more information.' },
+          { status: 403 }
+        );
+      }
+
+      // APPROVED Student Login
+      await prisma.rateLimit.deleteMany({
+        where: { ip, endpoint: 'login_attempt' },
+      });
+
+      const token = await signToken({ id: student.id, email: student.email, role: 'student' });
+      await setStudentAuthCookie(token);
+
+      return NextResponse.json({
+        success: true,
+        message: 'Login successful.',
+        redirectTo: '/student/dashboard',
+        user: { email: student.email, role: 'student' },
+      });
     }
 
-    // Reset rate limit on successful login
-    await prisma.rateLimit.deleteMany({
-      where: { ip, endpoint: 'login_attempt' },
-    });
+    // 3. User not found at all
+    await recordFailedAttempt(ip, windowStart);
+    return NextResponse.json(
+      { success: false, message: 'Invalid email or password.' },
+      { status: 401 }
+    );
 
-    // Create session token and set httpOnly cookie
-    const token = await signToken({ id: admin.id, email: admin.email });
-    await setAuthCookie(token);
-
-    return NextResponse.json({
-      success: true,
-      message: 'Login successful.',
-      user: { email: admin.email },
-    });
   } catch (error) {
-    console.error('Login API error:', error);
+    console.error('Unified login API error:', error);
     return NextResponse.json(
       { success: false, message: 'An unexpected server error occurred.' },
       { status: 500 }
