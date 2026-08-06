@@ -14,18 +14,14 @@ export default function Gallery() {
     "/video/WhatsApp Image 2026-07-31 at 10.22.58 PM (1).jpeg",
     "/video/WhatsApp Image 2026-07-31 at 10.22.58 PM (2).jpeg",
     "/video/WhatsApp Image 2026-07-31 at 10.22.58 PM.jpeg",
-    "/video/WhatsApp Image 2026-07-31 at 10.22.59 PM (1).jpeg",
-    "/video/WhatsApp Image 2026-07-31 at 10.22.59 PM (2).jpeg",
     "/video/WhatsApp Image 2026-07-31 at 10.22.59 PM.jpeg",
     "/video/WhatsApp Image 2026-07-31 at 10.23.00 PM.jpeg"
   ];
 
   const videos = [
-    "/video/WhatsApp Video 2026-07-31 at 10.22.54 PM.mp4",
+    "/video/video1.mp4",
     "/video/WhatsApp Video 2026-07-31 at 10.22.55 PM (1).mp4",
-    "/video/WhatsApp Video 2026-07-31 at 10.22.55 PM.mp4",
-    "/video/WhatsApp Video 2026-07-31 at 10.22.56 PM (1).mp4",
-    "/video/WhatsApp Video 2026-07-31 at 10.22.56 PM.mp4",
+    "/video/video2.mp4"
   ];
 
   return (

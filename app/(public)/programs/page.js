@@ -27,23 +27,47 @@ export default function Programs() {
       </p>
       
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-        {programs.map((program, index) => (
-          <div key={index} className="border border-gray-200 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow bg-white flex flex-col">
-            <PlaceholderImage label={program} height="h-48" />
-            <div className="p-6 flex flex-col flex-grow">
-              <h3 className="text-xl font-bold text-primary mb-2">{program}</h3>
-              <p className="text-sm opacity-80 mb-4 flex-grow">
-                Join our {program.toLowerCase()} classes to learn fundamental techniques, improve your skills, and express yourself.
-              </p>
-              <Link 
-                href={`/contact?program=${encodeURIComponent(program)}`} 
-                className="text-accent font-semibold text-left hover:underline w-full inline-block mt-auto"
-              >
-                Enquire Now &rarr;
-              </Link>
+        {programs.map((program, index) => {
+          const programImages = {
+            "Classical Dance": "/clasical.jpg",
+            "Semi-Classical": "/semi-clasical.jpg",
+            "Bollywood": "/bollywood.jpg",
+            "Zumba": "/zumba.jpg",
+            "Yoga": "/yoga.jpg",
+            "Vocal Music": "/vocal1.jpg",
+            "Guitar": "/guitar1.jpg",
+            "Tabla": "/tabla1.jpg",
+            "Wedding Choreography": "/wedding.jpg",
+          };
+          const imageSrc = programImages[program];
+          return (
+            <div key={index} className="border border-gray-200 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow bg-white flex flex-col">
+              {imageSrc ? (
+                <img 
+                  src={imageSrc} 
+                  alt={program} 
+                  className={`w-full h-48 object-cover ${
+                    program === "Classical Dance" || program === "Semi-Classical" ? "object-top" : ""
+                  }`} 
+                />
+              ) : (
+                <PlaceholderImage label={program} height="h-48" />
+              )}
+              <div className="p-6 flex flex-col flex-grow">
+                <h3 className="text-xl font-bold text-primary mb-2">{program}</h3>
+                <p className="text-sm opacity-80 mb-4 flex-grow">
+                  Join our {program.toLowerCase()} classes to learn fundamental techniques, improve your skills, and express yourself.
+                </p>
+                <Link 
+                  href={`/contact?program=${encodeURIComponent(program)}`} 
+                  className="text-accent font-semibold text-left hover:underline w-full inline-block mt-auto"
+                >
+                  Enquire Now &rarr;
+                </Link>
+              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </div>
   );

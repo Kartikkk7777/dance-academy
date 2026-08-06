@@ -54,18 +54,34 @@ export default function Home() {
         <div className="max-w-7xl mx-auto">
           <h2 className="text-3xl font-serif text-primary mb-10 text-center">Our Programs</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {['Classical Dance', 'Vocal Music', 'Yoga & Zumba'].map((program, i) => (
-              <div key={i} className="rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow border border-gray-100 bg-cream/30">
-                <PlaceholderImage label={`${program} Image`} height="h-48" />
-                <div className="p-6">
-                  <h3 className="text-xl font-bold text-primary mb-2">{program}</h3>
-                  <p className="text-sm opacity-80 mb-4">Join our expert instructors to master the art of {program.toLowerCase()}.</p>
-                  <Link href="/programs" className="text-accent font-semibold hover:underline">
-                    Learn more &rarr;
-                  </Link>
+            {['Classical Dance', 'Vocal Music', 'Yoga & Zumba'].map((program, i) => {
+              const programImages = {
+                "Classical Dance": "/clasical.jpg",
+                "Vocal Music": "/vocal1.jpg",
+                "Yoga & Zumba": "/yoga.jpg",
+              };
+              const imageSrc = programImages[program];
+              return (
+                <div key={i} className="rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow border border-gray-100 bg-cream/30">
+                  {imageSrc ? (
+                    <img 
+                      src={imageSrc} 
+                      alt={`${program} Image`} 
+                      className={`w-full h-48 object-cover ${program === "Classical Dance" ? "object-top" : ""}`} 
+                    />
+                  ) : (
+                    <PlaceholderImage label={`${program} Image`} height="h-48" />
+                  )}
+                  <div className="p-6">
+                    <h3 className="text-xl font-bold text-primary mb-2">{program}</h3>
+                    <p className="text-sm opacity-80 mb-4">Join our expert instructors to master the art of {program.toLowerCase()}.</p>
+                    <Link href="/programs" className="text-accent font-semibold hover:underline">
+                      Learn more &rarr;
+                    </Link>
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
           <div className="text-center mt-12">
             <Link href="/programs" className="inline-block border-2 border-primary text-primary px-6 py-2 rounded-full font-bold hover:bg-primary hover:text-white transition-colors">

@@ -17,7 +17,7 @@ export default function StudentDashboard() {
       try {
         const res = await fetch("/api/student/me");
         if (res.status === 401) {
-          router.replace("/student/login");
+          router.replace("/login");
           return;
         }
         if (res.ok) {

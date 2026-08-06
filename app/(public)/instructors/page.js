@@ -58,6 +58,28 @@ export default function Instructors() {
         "Completed a one-year internship in vocal music",
         "Specializes in teaching fundamentals of Sur, Taal, rhythm, and voice culture"
       ]
+    },
+    {
+      name: "Komal",
+      image: "/komal.jpg",
+      role: "Yoga Instructor",
+      bio: "Komal is a dedicated Yoga instructor at Shivangikam. She specializes in guiding students through traditional yoga practices, promoting physical alignment, mindfulness, and overall wellness.",
+      credentials: [
+        "MA in Yogacharya (pursuing)",
+        "200hrs Yoga & Wellness Teacher Training Course (Swasthit Wellness)",
+        "2 years of Yoga teaching experience"
+      ]
+    },
+    {
+      name: "Vaishnavi",
+      image: "/vaishnavi.jpg",
+      role: "Yoga Instructor",
+      bio: "Vaishnavi is an experienced Yoga educator committed to helping students refine their yoga postures, breath control, and meditation techniques in an encouraging and supportive environment.",
+      credentials: [
+        "MA in Yogacharya (pursuing)",
+        "200hrs Yoga & Wellness Teacher Training Course (Swasthit Wellness)",
+        "2 years of Yoga teaching experience"
+      ]
     }
   ];
 

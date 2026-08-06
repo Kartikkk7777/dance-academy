@@ -95,6 +95,9 @@ export async function proxy(request) {
   // ─────────────────────────────────────────────
   if (pathname.startsWith('/admin/dashboard')) {
     if (!isAdmin) {
+      if (isStudent) {
+        return NextResponse.redirect(new URL('/student/dashboard', request.url));
+      }
       const loginUrl = new URL('/login', request.url);
       loginUrl.searchParams.set('from', pathname);
       return NextResponse.redirect(loginUrl);
@@ -108,6 +111,9 @@ export async function proxy(request) {
   // ─────────────────────────────────────────────
   if (pathname.startsWith('/student/dashboard')) {
     if (!isStudent) {
+      if (isAdmin) {
+        return NextResponse.redirect(new URL('/admin/dashboard', request.url));
+      }
       const loginUrl = new URL('/login', request.url);
       loginUrl.searchParams.set('from', pathname);
       return NextResponse.redirect(loginUrl);
