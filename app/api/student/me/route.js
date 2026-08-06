@@ -18,18 +18,18 @@ export async function GET() {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    // Fetch timetable for their program
-    const timetableSlots = await prisma.timetableSlot.findMany({
-      where: { programName: student.program, isActive: true },
-      orderBy: { dayOfWeek: 'asc' },
-    });
-
-    // Fetch upcoming events
-    const events = await prisma.event.findMany({
-      where: { isActive: true, date: { gte: new Date() } },
-      orderBy: { date: 'asc' },
-      take: 5,
-    });
+    // Fetch timetable and upcoming events in parallel — they're independent of each other.
+    const [timetableSlots, events] = await Promise.all([
+      prisma.timetableSlot.findMany({
+        where: { programName: student.program, isActive: true },
+        orderBy: { dayOfWeek: 'asc' },
+      }),
+      prisma.event.findMany({
+        where: { isActive: true, date: { gte: new Date() } },
+        orderBy: { date: 'asc' },
+        take: 5,
+      }),
+    ]);
 
     return NextResponse.json({ student, timetableSlots, events });
   } catch (error) {

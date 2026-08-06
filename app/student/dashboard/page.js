@@ -40,8 +40,44 @@ export default function StudentDashboard() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-cream flex items-center justify-center">
-        <p className="text-gray-500 text-sm">Loading your dashboard...</p>
+      <div className="min-h-screen bg-cream">
+        {/* Header skeleton */}
+        <div className="bg-dark-maroon py-8 px-4 sm:px-6 lg:px-8">
+          <div className="max-w-5xl mx-auto flex items-center justify-between">
+            <div className="space-y-2">
+              <div className="h-3 w-24 bg-white/20 rounded animate-pulse" />
+              <div className="h-7 w-48 bg-white/20 rounded animate-pulse" />
+              <div className="h-3 w-36 bg-white/20 rounded animate-pulse" />
+            </div>
+            <div className="h-9 w-24 bg-white/20 rounded-xl animate-pulse" />
+          </div>
+        </div>
+
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">
+          {/* Enrollment card skeleton */}
+          <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 flex flex-col sm:flex-row sm:items-center gap-4">
+            <div className="w-14 h-14 bg-gray-100 rounded-xl animate-pulse flex-shrink-0" />
+            <div className="flex-grow space-y-2">
+              <div className="h-3 w-24 bg-gray-100 rounded animate-pulse" />
+              <div className="h-5 w-32 bg-gray-100 rounded animate-pulse" />
+              <div className="h-3 w-40 bg-gray-100 rounded animate-pulse" />
+            </div>
+            <div className="h-14 w-40 bg-gray-100 rounded-xl animate-pulse" />
+          </div>
+
+          {/* Timetable card skeleton */}
+          <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
+            <div className="h-6 w-40 bg-gray-100 rounded animate-pulse mb-6" />
+            <div className="space-y-4">
+              {[1, 2, 3].map((i) => (
+                <div key={i} className="flex gap-4 items-center">
+                  <div className="h-3 w-20 bg-gray-100 rounded animate-pulse flex-shrink-0" />
+                  <div className="h-8 w-36 bg-gray-100 rounded-lg animate-pulse" />
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
       </div>
     );
   }
