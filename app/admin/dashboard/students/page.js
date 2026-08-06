@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Users, CheckCircle, XCircle, Clock, Trash2, ChevronLeft, ChevronRight, Key } from "lucide-react";
+import { Users, CheckCircle, XCircle, Clock, Trash2, ChevronLeft, ChevronRight, Key, X } from "lucide-react";
 
 const STATUSES = ["ALL", "PENDING", "APPROVED", "REJECTED"];
 

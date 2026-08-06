@@ -35,7 +35,7 @@ export default function StudentDashboard() {
   async function handleLogout() {
     setLoggingOut(true);
     await fetch("/api/student/logout", { method: "POST" });
-    router.replace("/student/login");
+    router.replace("/login");
   }
 
   if (loading) {

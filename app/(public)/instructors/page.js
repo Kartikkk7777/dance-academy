@@ -25,7 +25,7 @@ export default function Instructors() {
     },
     {
       name: "Premchand",
-      image: null,
+      image: "/tabla.jpeg",
       role: "Tabla Instructor",
       bio: "A trained and dedicated Tabla artist with extensive experience in accompaniment, solo performance, and music teaching. Premchand is highly skilled in providing Tabla accompaniment for vocal, instrumental (flute and sitar), and dance performances. He is experienced in teaching Tabla and conducting practical music sessions in a simple, disciplined, and student-friendly manner. He has completed a one-year internship at the BHU Music Department and has performed on stage with Grammy-awarded Pt. Rajendra Prasanna and other renowned senior artists.",
       credentials: [
