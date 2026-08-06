@@ -1,9 +1,11 @@
 import { NextResponse } from 'next/server';
 import { z } from 'zod';
 import prisma from '@/lib/db';
+import { hashPassword } from '@/lib/auth';
 
 const updateSchema = z.object({
-  status: z.enum(['APPROVED', 'REJECTED', 'PENDING']),
+  status: z.enum(['APPROVED', 'REJECTED', 'PENDING']).optional(),
+  password: z.string().min(8).max(72).optional(),
 });
 
 // PATCH /api/admin/students/[id]
@@ -28,9 +30,17 @@ export async function PATCH(request, { params }) {
       return NextResponse.json({ error: 'Student not found.' }, { status: 404 });
     }
 
+    const data = {};
+    if (result.data.status !== undefined) {
+      data.status = result.data.status;
+    }
+    if (result.data.password !== undefined) {
+      data.passwordHash = await hashPassword(result.data.password);
+    }
+
     const updated = await prisma.student.update({
       where: { id },
-      data: { status: result.data.status },
+      data,
       select: { id: true, name: true, status: true },
     });
 

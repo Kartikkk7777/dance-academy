@@ -26,6 +26,7 @@ export default function AdminDashboardLayout({ children }) {
     { name: "Overview", href: "/admin/dashboard", icon: LayoutDashboard },
     { name: "Enquiries", href: "/admin/dashboard/enquiries", icon: Inbox },
     { name: "Events", href: "/admin/dashboard/events", icon: Calendar },
+    { name: "Timetable", href: "/admin/dashboard/timetable", icon: Calendar },
     { name: "Students", href: "/admin/dashboard/students", icon: Users },
     { name: "Settings", href: "/admin/dashboard/settings", icon: SettingsIcon },
   ];

@@ -131,33 +131,6 @@ export default function StudentDashboard() {
           )}
         </div>
 
-        {/* Upcoming Events */}
-        <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
-          <div className="flex items-center gap-3 mb-6">
-            <Calendar className="w-5 h-5 text-accent" />
-            <h2 className="text-xl font-serif font-bold text-primary">Academy Announcements</h2>
-          </div>
-          {events.length === 0 ? (
-            <div className="py-10 text-center border-2 border-dashed border-gray-100 rounded-xl">
-              <p className="text-gray-400 text-sm">No upcoming events at the moment. Check back soon!</p>
-            </div>
-          ) : (
-            <div className="space-y-4">
-              {events.map((ev) => (
-                <div key={ev.id} className="flex gap-4 items-start border-b border-gray-50 pb-4 last:border-0 last:pb-0">
-                  <div className="flex-shrink-0 w-12 text-center">
-                    <p className="text-xl font-bold text-primary">{new Date(ev.date).getDate()}</p>
-                    <p className="text-xs text-accent font-semibold uppercase">{new Date(ev.date).toLocaleString("en-IN", { month: "short" })}</p>
-                  </div>
-                  <div>
-                    <h3 className="font-bold text-gray-900 text-sm">{ev.title}</h3>
-                    <p className="text-gray-500 text-xs mt-0.5 leading-relaxed line-clamp-2">{ev.description}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
       </div>
     </div>
   );

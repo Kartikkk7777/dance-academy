@@ -1,3 +1,4 @@
+import WhatsAppButton from "@/components/WhatsAppButton";
 import "./globals.css";
 
 export const metadata = {
@@ -55,6 +56,7 @@ export default function RootLayout({ children }) {
       </head>
       <body className="min-h-full flex flex-col bg-background text-foreground font-sans">
         {children}
+        <WhatsAppButton />
       </body>
     </html>
   );

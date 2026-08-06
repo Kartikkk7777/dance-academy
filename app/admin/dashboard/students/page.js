@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Users, CheckCircle, XCircle, Clock, Trash2, ChevronLeft, ChevronRight } from "lucide-react";
+import { Users, CheckCircle, XCircle, Clock, Trash2, ChevronLeft, ChevronRight, Key } from "lucide-react";
 
 const STATUSES = ["ALL", "PENDING", "APPROVED", "REJECTED"];
 
@@ -12,6 +12,11 @@ export default function AdminStudentsPage() {
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [totalCount, setTotalCount] = useState(0);
+  
+  // Password Change State
+  const [pwModalOpen, setPwModalOpen] = useState(false);
+  const [selectedStudent, setSelectedStudent] = useState(null);
+  const [newPassword, setNewPassword] = useState("");
 
   async function fetchStudents() {
     setLoading(true);
@@ -59,6 +64,35 @@ export default function AdminStudentsPage() {
       if (res.ok) setStudents((prev) => prev.filter((s) => s.id !== id));
     } catch (err) {
       console.error("Delete error:", err);
+    }
+  }
+
+  async function handlePasswordChange(e) {
+    e.preventDefault();
+    if (!newPassword || newPassword.length < 8) {
+      alert("Password must be at least 8 characters long.");
+      return;
+    }
+    if (!confirm(`Are you sure you want to change the password for ${selectedStudent.name}?`)) {
+      return;
+    }
+    try {
+      const res = await fetch(`/api/admin/students/${selectedStudent.id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ password: newPassword }),
+      });
+      if (res.ok) {
+        alert("Password updated successfully.");
+        setPwModalOpen(false);
+        setNewPassword("");
+        setSelectedStudent(null);
+      } else {
+        const data = await res.json();
+        alert(data.error || "Failed to update password.");
+      }
+    } catch (err) {
+      console.error("Password update error:", err);
     }
   }
 
@@ -165,6 +199,13 @@ export default function AdminStudentsPage() {
                           </button>
                         )}
                         <button
+                          onClick={() => { setSelectedStudent(s); setNewPassword(""); setPwModalOpen(true); }}
+                          className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-semibold border border-gray-200 text-gray-600 bg-gray-50 hover:bg-gray-100 transition-colors"
+                        >
+                          <Key className="w-3.5 h-3.5" />
+                          <span>Password</span>
+                        </button>
+                        <button
                           onClick={() => handleDelete(s.id)}
                           className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-semibold border border-gray-200 text-gray-600 bg-gray-50 hover:text-red-700 hover:bg-red-50 hover:border-red-200 transition-colors"
                         >
@@ -202,6 +243,59 @@ export default function AdminStudentsPage() {
           </div>
         )}
       </div>
+
+      {/* Change Password Modal */}
+      {pwModalOpen && selectedStudent && (
+        <div className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-2xl max-w-md w-full p-6 space-y-6 shadow-2xl relative">
+            <button
+              onClick={() => { setPwModalOpen(false); setSelectedStudent(null); }}
+              className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 p-1"
+            >
+              <X className="w-5 h-5" />
+            </button>
+
+            <div>
+              <h2 className="text-2xl font-bold text-primary font-serif">Change Student Password</h2>
+              <p className="text-xs text-gray-500 mt-1">
+                Setting password for <strong>{selectedStudent.name}</strong> ({selectedStudent.email})
+              </p>
+            </div>
+
+            <form onSubmit={handlePasswordChange} className="space-y-4 text-sm">
+              <div className="space-y-1">
+                <label className="block text-xs font-bold uppercase tracking-wider text-gray-500">New Password</label>
+                <input
+                  type="password"
+                  placeholder="At least 8 characters"
+                  value={newPassword}
+                  onChange={(e) => setNewPassword(e.target.value)}
+                  className="w-full border border-gray-200 rounded-xl px-4 py-2.5 focus:outline-none focus:border-primary"
+                  required
+                  minLength={8}
+                />
+              </div>
+
+              <div className="pt-4 border-t border-gray-100 flex items-center justify-end gap-3">
+                <button
+                  type="button"
+                  onClick={() => { setPwModalOpen(false); setSelectedStudent(null); }}
+                  className="px-5 py-2.5 rounded-xl text-xs font-bold text-gray-600 bg-gray-50 hover:bg-gray-100 transition-colors"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="px-5 py-2.5 rounded-xl text-xs font-bold text-cream bg-primary hover:bg-maroon-dark transition-colors"
+                >
+                  Change Password
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
+
