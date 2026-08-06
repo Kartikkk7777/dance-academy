@@ -1,8 +1,13 @@
 import { NextResponse } from 'next/server';
 import prisma from '@/lib/db';
+import { getAdminSession } from '@/lib/auth';
 
 export async function GET() {
   try {
+    const session = await getAdminSession();
+    if (!session) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
     const slots = await prisma.timetableSlot.findMany({
       orderBy: [
         { dayOfWeek: 'asc' },
@@ -25,6 +30,10 @@ export async function GET() {
 
 export async function POST(request) {
   try {
+    const session = await getAdminSession();
+    if (!session) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
     const body = await request.json();
     const { programName, dayOfWeek, startTime, endTime, instructor, isActive } = body;
 

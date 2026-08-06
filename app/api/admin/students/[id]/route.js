@@ -1,16 +1,19 @@
 import { NextResponse } from 'next/server';
 import { z } from 'zod';
 import prisma from '@/lib/db';
-import { hashPassword } from '@/lib/auth';
+import { hashPassword, getAdminSession } from '@/lib/auth';
 
 const updateSchema = z.object({
   status: z.enum(['APPROVED', 'REJECTED', 'PENDING']).optional(),
   password: z.string().min(8).max(72).optional(),
 });
 
-// PATCH /api/admin/students/[id]
 export async function PATCH(request, { params }) {
   try {
+    const session = await getAdminSession();
+    if (!session) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
     const { id } = await params;
 
     let body;
@@ -54,6 +57,10 @@ export async function PATCH(request, { params }) {
 // DELETE /api/admin/students/[id]
 export async function DELETE(request, { params }) {
   try {
+    const session = await getAdminSession();
+    if (!session) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
     const { id } = await params;
     const student = await prisma.student.findUnique({ where: { id } });
     if (!student) {

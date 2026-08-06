@@ -1,8 +1,13 @@
 import { NextResponse } from 'next/server';
 import prisma from '@/lib/db';
+import { getAdminSession } from '@/lib/auth';
 
 export async function PATCH(request, { params }) {
   try {
+    const session = await getAdminSession();
+    if (!session) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
     const { id } = await params;
     const body = await request.json();
     const { programName, dayOfWeek, startTime, endTime, instructor, isActive } = body;
@@ -46,6 +51,10 @@ export async function PATCH(request, { params }) {
 
 export async function DELETE(request, { params }) {
   try {
+    const session = await getAdminSession();
+    if (!session) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
     const { id } = await params;
 
     const existing = await prisma.timetableSlot.findUnique({

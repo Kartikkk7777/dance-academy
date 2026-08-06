@@ -36,8 +36,11 @@ function LoginForm() {
         setError(data.message || "Login failed. Please try again.");
         setLoading(false);
       } else {
-        // Successful login - redirect to the page they came from, or the role-specific dashboard
-        const destination = from || data.redirectTo || "/student/dashboard";
+        // Successful login - redirect to the validated page they came from, or the role-specific dashboard
+        let destination = data.redirectTo || "/student/dashboard";
+        if (from && from.startsWith("/") && !from.startsWith("//")) {
+          destination = from;
+        }
         router.push(destination);
         router.refresh();
       }

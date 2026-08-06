@@ -3,7 +3,10 @@ import { jwtVerify } from 'jose';
 
 const ADMIN_COOKIE_NAME = 'admin_session';
 const STUDENT_COOKIE_NAME = 'student_session';
-const JWT_SECRET = process.env.JWT_SECRET || 'fallback-secret-for-development-only-must-set-env-secret-key-32-chars';
+const JWT_SECRET = process.env.JWT_SECRET;
+if (!JWT_SECRET) {
+  throw new Error('CRITICAL CONFIGURATION ERROR: JWT_SECRET environment variable is missing.');
+}
 const secretKey = new TextEncoder().encode(JWT_SECRET);
 
 async function verifySessionToken(token) {

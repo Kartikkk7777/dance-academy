@@ -1,8 +1,13 @@
 import { NextResponse } from 'next/server';
 import prisma from '@/lib/db';
+import { getAdminSession } from '@/lib/auth';
 
 export async function GET() {
   try {
+    const session = await getAdminSession();
+    if (!session) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
     const [totalEnquiries, newEnquiries, activeEvents] = await Promise.all([
       prisma.enquiry.count(),
       prisma.enquiry.count({ where: { status: 'NEW' } }),
