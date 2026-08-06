@@ -61,7 +61,7 @@ export default function Instructors() {
     },
     {
       name: "Komal",
-      image: "/komal.jpg",
+      image: "/Komal.jpg",
       role: "Yoga Instructor",
       bio: "Komal is a dedicated Yoga instructor at Shivangikam. She specializes in guiding students through traditional yoga practices, promoting physical alignment, mindfulness, and overall wellness.",
       credentials: [
@@ -72,7 +72,7 @@ export default function Instructors() {
     },
     {
       name: "Vaishnavi",
-      image: "/vaishnavi.jpg",
+      image: "/Vaishnavi.jpg",
       role: "Yoga Instructor",
       bio: "Vaishnavi is an experienced Yoga educator committed to helping students refine their yoga postures, breath control, and meditation techniques in an encouraging and supportive environment.",
       credentials: [
