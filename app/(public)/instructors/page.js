@@ -80,6 +80,20 @@ export default function Instructors() {
         "200hrs Yoga & Wellness Teacher Training Course (Swasthit Wellness)",
         "2 years of Yoga teaching experience"
       ]
+    },
+    {
+      name: "Amrita Singh",
+      image: "/amrita.jpeg",
+      role: "Aerobics & Zumba Instructor",
+      bio: "Amrita Singh is an enthusiastic fitness instructor passionate about dance, movement, and group motivation. As an active participant in group fitness routines, she brings energy and rhythm to her classes to help students stay active and healthy.",
+      credentials: [
+        "Master of Arts (M.A.)",
+        "Enthusiastic and energetic fitness enthusiast, passionate about dance and movement",
+        "Regular participant in Aerobics and Zumba fitness classes",
+        "Strong interest in dance, fitness, and an active lifestyle",
+        "Comfortable following and practicing group fitness routines",
+        "Key skills: basic Aerobics & Zumba practice, dance/rhythm coordination, group motivation"
+      ]
     }
   ];
 
