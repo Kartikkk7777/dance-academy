@@ -28,7 +28,7 @@ export default function Gallery() {
   const videos = [
     "/video/video1.mp4",
     "/video/WhatsApp%20Video%202026-07-31%20at%2010.22.55%20PM%20(1).mp4",
-    "/video/video2.mp4"
+    "/video/Video2.mp4"
   ];
 
   return (
